@@ -24,17 +24,18 @@
 ## Selenium IDE Formatter
 
 To use the fomatter in selenium IDE open selenium:
- * Click "Options"
- * Select "Options"
- * Select "Formats"
- * Click "Add"
- * name the format i.e. : JSON
- * Paste jsonFormat.js
- * click "Save"
- * click "Ok"
- * Click "Options"
- * Hover over "Format" and select JSON (or whatever your named it)
- * Hover over "Clipboard format" and select JSON (or whatever your named it)
+
+* Click "Options"
+* Select "Options"
+* Select "Formats"
+* Click "Add"
+* name the format i.e. : JSON
+* Paste jsonFormat.js
+* click "Save"
+* click "Ok"
+* Click "Options"
+* Hover over "Format" and select JSON (or whatever your named it)
+* Hover over "Clipboard format" and select JSON (or whatever your named it)
 
 ## Native Commands
 
