@@ -21,6 +21,21 @@
 
     var runner = new Runner(options);
 
+## Selenium IDE Formatter
+
+To use the fomatter in selenium IDE open selenium:
+ * Click "Options"
+ * Select "Options"
+ * Select "Formats"
+ * Click "Add"
+ * name the format i.e. : JSON
+ * Paste jsonFormat.js
+ * click "Save"
+ * click "Ok"
+ * Click "Options"
+ * Hover over "Format" and select JSON (or whatever your named it)
+ * Hover over "Clipboard format" and select JSON (or whatever your named it)
+
 ## Native Commands
 
 googleTest.json
@@ -69,6 +84,56 @@ test.js
 
 ## External Commands
 
+External commands can be used to specify a commonly used piece of code, your define them just as your would for sodaJS
+
+testHelper.js
+
+    exports.assertTitle = function(title)
+    {
+        return function(browser) {
+            browser.getTitle(function(title) {
+                assert.ok(~title.indexOf(title), 'Title did not include the query');
+            });
+        }
+    }
+
+To reference the command in the json test use the following format
+
+    {
+        "command" : "and",
+        "file" : "testHelper.js",
+        "fun" : "assertTitle",
+        "args" : ["hello world"]
+    }
+
+the file parameter can either be an absolute or relative to the location of where the originating node script was
+ran from so if your directory look like this:
+
+    - tests
+        -util
+            -testHelper.js
+        - internal
+            - googleTest.json
+            - googleTest2.json
+            - googleTest3.json
+        - external
+            - externalCommands.json
+
+and you ran
+
+    soda-runner suite=external testDir=tests
+
+from the same directory thats tests resides in then
+
+    {
+        "command" : "and",
+        "file" : "tests/util/testHelper.js",
+        "fun" : "assertTitle",
+        "args" : ["hello world"]
+    }
+
+could be used to specify the location of the testHelper.js script
+
 externalCommands.json
 
     [
@@ -114,39 +179,27 @@ externalCommands.json
     ]
 
 
-
-testHelper.js
-
-    exports.assertTitle = function(title)
-    {
-        return function(browser) {
-            browser.getTitle(function(title) {
-                assert.ok(~title.indexOf(title), 'Title did not include the query');
-            });
-        }
-    }
-
 test.js
 
     var Runner = require('soda-runner'),
-    var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/testFiles"});
+    var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/tests"});
     var tests = runner.run("all", ["externalCommand"]);
 
 To run all tests in a directory
 
-    var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/testFiles"});
+    var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/tests"});
     var tests = runner.run("all");
 
 To run all tests in a directory
 
-   var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/testFiles"});
+   var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/tests"});
    var tests = runner.run("all", ["googleTest", "externalCommands"]);
 
 
 ##Define a suite
 If you want to define a particular suite, create a directory in your base test directory, i.e:
 
-    - Tests
+    - tests
         - internal
             - googleTest.json
             - googleTest2.json
@@ -156,11 +209,11 @@ If you want to define a particular suite, create a directory in your base test d
 
 To run the internal suite
 
-    var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/testFiles"});
+    var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/tests"});
     var tests = runner.run("internal");
 
 To run a particular tests in a suite
-    var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/testFiles"});
+    var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/tests"});
     var tests = runner.run("internal", ["googleTest, "googleTest3]);
 
 
