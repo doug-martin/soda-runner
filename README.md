@@ -166,11 +166,11 @@ To run a particular tests in a suite
 
 ## Command line
 
-    node test.js suite=all tests=test1,test2,.... testDir=locationOfTests url=url browser=browserType
+    soda-runner suite=all tests=test1,test2,.... testDir=locationOfTests url=url browser=browserType
 
 executing inner suites
 
-    node test.js suite=suite.innerSuite tests=test1,test2,.... testDir=locationOfTests url=url browser=browserType
+    soda-runner suite=suite.innerSuite tests=test1,test2,.... testDir=locationOfTests url=url browser=browserType
 
 
 ## More Information
