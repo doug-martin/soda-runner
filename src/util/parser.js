@@ -6,7 +6,12 @@ var openFile = function(fileName) {
     return fs.readFileSync(fileName, 'utf-8');
 };
 
+var isAbsolutePath = function(path){
+    return path && path.charAt(0) == "/";
+};
+
 var parseAndRunTest = function(data, browser) {
+    var cwd = process.cwd();
     try {
         var arr = JSON.parse(data);
         if (arr && arr.length) {
@@ -16,8 +21,9 @@ var parseAndRunTest = function(data, browser) {
                     var c = cmd.command;
                     var args = [];
                     if (cmd.file) {
-                        !externFiles[cmd.file] && (externFiles[cmd.file] = require(cmd.file));
-                        var file = externFiles[cmd.file];
+                        var cmdFile = isAbsolutePath(cmd.file) ? cmd.file : cwd + "/" + cmd.file;
+                        !externFiles[cmdFile] && (externFiles[cmdFile] = require(cmdFile));
+                        var file = externFiles[cmdFile];
                         args.push(file[cmd.fun].apply(file, cmd.args || []));
                     } else {
                         if (cmd.target) args.push(cmd.target);

@@ -12,7 +12,7 @@ var printUsage = function() {
 
 var createArray = function(testStr) {
     if (testStr.indexOf(',') > 0) return testStr.replace(/\s+/g, "").split(",").map(function(str){return str.replace('.', '/');});
-    else return [testStr.replace('.', '/')]
+    else return testStr.replace('.', '/')
 }
 
 var loadConfiguration = function(fileName) {

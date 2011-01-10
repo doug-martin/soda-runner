@@ -10,16 +10,17 @@ soda.addCommand('refreshAndWait');
 
 
 var resolvePath = function(testDir, suite, test) {
-    return testDir + '/' + suite + '/' + test + '.json';
+    testDir += suite ? "/" + suite : "";
+    testDir += test ? "/" + test + ".json" : "";
+    return testDir;
 }
 
 var getAllTests = function(dirName, mimeTypes) {
     var tests = [];
 
     function canParse(fileName) {
-        var ret = false, indexOf = fileName.lastIndexOf(".");
-        indexOf > 0 && (ret = fileName.slice(indexOf + 1));
-        return ret;
+        var ext = path.extname(fileName).replace(".", "");
+        return ext in mimeTypes;
     }
 
     if (fs.statSync(dirName).isDirectory()) {
@@ -81,41 +82,41 @@ var runner = exports = module.exports = function Runner(args) {
 }
 
 runner.prototype.run = function(suite, tests) {
-    if (suite) {
-        var testFiles = [];
+
+    var testFiles = [];
+    if (suite == "all") suite = null;
+    if (tests == 'all' && suite == "all") {
+        testFiles = getAllTests(this.testDir, this.mimeTypes)
+    } else if (tests == "all") {
         if (suite && suite instanceof Array) {
             suite.forEach(function(s) {
                 testFiles = testFiles.concat(getAllTests(this.testDir + '/' + s, this.mimeTypes));
-            });
-        } else if (tests && tests.length == 0 || tests == 'all' && suite != "all") {
-            testFiles = getAllTests(this.testDir + '/' + suite, this.mimeTypes);
-        } else if (tests && tests.length && suite != "all") {
+            }, this);
+        } else if(suite){
+            testFiles = testFiles.concat(getAllTests(this.testDir + '/' + suite, this.mimeTypes));
+        }
+    } else {
+        if (tests instanceof Array) {
             testFiles = tests.map(function(t) {
                 return resolvePath(this.testDir, suite, t);
             }, this);
-        } else if (tests && tests.length && suite == "all" && tests != "all") {
-            testFiles = tests.map(function(t) {
-                return this.testDir + "/" + t + ".json"
-            }, this);
         } else {
-            testFiles = getAllTests(this.testDir, this.mimeTypes)
+            testFiles.push(resolvePath(this.testDir, suite, tests));
         }
-        if (testFiles.length) {
-            var browser = this.browser;
-            browser.chain.session()
-                    .windowMaximize()
-                    .open(this.baseUrl);
-            parser.parse(testFiles, browser);
-            browser.testComplete()
-                    .end(function(err) {
-                if (err) console.error(err)
-                else console.log("All tests passed");
-            });
-        } else {
-            throw new Error("No tests found")
-        }
+    }
+    if (testFiles.length) {
+        var browser = this.browser;
+        browser.chain.session()
+                .windowMaximize()
+                .open(this.baseUrl);
+        parser.parse(testFiles, browser);
+        browser.testComplete()
+                .end(function(err) {
+            if (err) console.error(err)
+            else console.log("All tests passed");
+        });
     } else {
-        throw new Error("No suite defined")
+        console.log("No tests found")
     }
     return testFiles;
 };
