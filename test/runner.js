@@ -1,15 +1,6 @@
 var Runner = require('../index.js'),
         assert = require("assert");
-/*
- *  var testDir = __dirname;
- var client = "createClient";
- var port = 4444;
- var host = "localhost";
- var url = "http://{host}".replace("{host}", host);
- var browserType = 'firefox';
- var baseUrl = '/';
- var mimeTypes = { json : 1};
- * */
+
 module.exports = {
     "create runner" : function() {
         var runner = new Runner();
