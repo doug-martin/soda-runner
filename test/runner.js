@@ -73,6 +73,12 @@ module.exports = {
         assert.deepEqual([__dirname + "/testFiles/externalCommand.json", __dirname + "/testFiles/googleTest.json"], tests)
     },
 
+    "get test and files with all all" : function() {
+        var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/testFiles"});
+        var tests = runner.run("all", "all");
+        assert.deepEqual([__dirname + "/testFiles/externalCommand.json", __dirname + "/testFiles/googleTest.json"], tests)
+    },
+
     "get test and run single test files" : function() {
         var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/testFiles"});
         var tests = runner.run("all", ["googleTest"]);

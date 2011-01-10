@@ -22,7 +22,6 @@ var getAllTests = function(dirName, mimeTypes) {
         var ext = path.extname(fileName).replace(".", "");
         return ext in mimeTypes;
     }
-
     if (fs.statSync(dirName).isDirectory()) {
         /*  Create the directory where all our junk is moving to; read the mode of the source directory and mirror it */
         var files = fs.readdirSync(dirName);
@@ -30,8 +29,8 @@ var getAllTests = function(dirName, mimeTypes) {
             var currFileName = dirName + "/" + files[i],
                     currFile = fs.statSync(currFileName);
             if (currFile.isDirectory()) {
-                tests = tests.concat(getAllTests(currFileName));
-            } else if (canParse(currFileName)) {
+                tests = tests.concat(getAllTests(currFileName, mimeTypes));
+            } else if (canParse(currFileName, mimeTypes)) {
                 tests.push(currFileName);
             }
         }
@@ -82,8 +81,9 @@ var runner = exports = module.exports = function Runner(args) {
 }
 
 runner.prototype.run = function(suite, tests) {
-
+    console.log(suite + tests)
     var testFiles = [];
+    if (!tests) tests = "all"
     if (suite == "all") suite = null;
     if (tests == 'all' && suite == "all") {
         testFiles = getAllTests(this.testDir, this.mimeTypes)
@@ -92,8 +92,10 @@ runner.prototype.run = function(suite, tests) {
             suite.forEach(function(s) {
                 testFiles = testFiles.concat(getAllTests(this.testDir + '/' + s, this.mimeTypes));
             }, this);
-        } else if(suite){
+        } else if (suite) {
             testFiles = testFiles.concat(getAllTests(this.testDir + '/' + suite, this.mimeTypes));
+        } else {
+            testFiles = testFiles.concat(getAllTests(this.testDir, this.mimeTypes));
         }
     } else {
         if (tests instanceof Array) {
