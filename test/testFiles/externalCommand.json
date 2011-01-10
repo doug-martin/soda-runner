@@ -1,0 +1,42 @@
+[
+    {
+        "command":"type",
+        "target":"q",
+        "value":"hello world"
+    },
+    {
+        "command" : "setSpeed",
+        "target" : "1000"
+    },
+    {
+        "command":"click",
+        "target":"btnG",
+        "value":""
+    },
+    {
+        "command" : "and",
+        "file" : "../../test/testHelper",
+        "fun" : "assertTitle",
+        "args" : ["hello world"]
+    },
+    {
+        "command":"waitForElementPresent",
+        "target":"sflas",
+        "value":""
+    },
+        {
+        "command" : "setSpeed",
+        "target" : "10"
+    },
+    {
+        "command":"clickAndWait",
+        "target":"sflas",
+        "value":""
+    },
+    {
+        "command":"assertValue",
+        "target":"as_q",
+        "value":"hello world"
+    }
+]
+
