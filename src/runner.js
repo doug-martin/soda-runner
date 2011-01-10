@@ -87,13 +87,13 @@ runner.prototype.run = function(suite, tests) {
             suite.forEach(function(s) {
                 testFiles = testFiles.concat(getAllTests(this.testDir + '/' + s, this.mimeTypes));
             });
-        } else if (tests && tests.length == 0 || tests == 'all') {
+        } else if (tests && tests.length == 0 || tests == 'all' && suite != "all") {
             testFiles = getAllTests(this.testDir + '/' + suite, this.mimeTypes);
         } else if (tests && tests.length && suite != "all") {
             testFiles = tests.map(function(t) {
                 return resolvePath(this.testDir, suite, t);
             }, this);
-        } else if (tests && tests.length && suite == "all") {
+        } else if (tests && tests.length && suite == "all" && tests != "all") {
             testFiles = tests.map(function(t) {
                 return this.testDir + "/" + t + ".json"
             }, this);

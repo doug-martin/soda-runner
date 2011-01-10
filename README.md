@@ -4,6 +4,10 @@
  A runner for SodaJS to allow developers to define tests in SelniumIDE using the formatter located in /formatter.
  The formatter allows one to save tests between the IDE into a corresponding json file that soda-runner can run.
 
+## Installation
+
+    npm install soda-runner
+
 ## Runner Options
 
     /*testDir - the base directory where your tests are located
@@ -59,7 +63,7 @@ googleTest.json
 
 test.js
 
-    var Runner = require('../index.js'),
+    var Runner = require('soda-runner'),
     var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/tests"});
     var tests = runner.run("all", ["googleTest"]);
 
@@ -111,7 +115,7 @@ externalCommands.json
 
 
 
-## testHelper.js
+testHelper.js
 
     exports.assertTitle = function(title)
     {
@@ -124,7 +128,7 @@ externalCommands.json
 
 test.js
 
-    var Runner = require('../index.js'),
+    var Runner = require('soda-runner'),
     var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/testFiles"});
     var tests = runner.run("all", ["externalCommand"]);
 
@@ -138,6 +142,8 @@ To run all tests in a directory
    var runner = new Runner({url : "http://www.google.com",browserType : 'firefox', testDir : __dirname + "/testFiles"});
    var tests = runner.run("all", ["googleTest", "externalCommands"]);
 
+
+##Define a suite
 If you want to define a particular suite, create a directory in your base test directory, i.e:
 
     - Tests

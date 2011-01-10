@@ -1,0 +1,11 @@
+{
+  "name": "soda-runner",
+  "description": "Runner for sodaJS",
+  "keywords": ["selenium", "soda", "testing", "test", "tests"],
+  "version": "0.0.1",
+  "author": "Doug Martin doug.martin@pollenware.com",
+  "main": "./index.js",
+  "bin"           : { "soda-runner": "./bin/soda-runner" },
+  "dependencies"  : {"expresso": ">=0.5.0"},
+  "engines": { "node": ">= 0.2.0" }
+}

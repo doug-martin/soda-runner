@@ -1,4 +1,6 @@
-var runner = require('./index'),
+#!/usr/bin/env node
+
+var Runner = require('soda-runner'),
         fs = require('fs');
 
 var printUsage = function() {
@@ -46,7 +48,7 @@ var runSuites = function(args) {
     else printUsage();
 }
 
-var args = runSuites(processArguments(process.argv.slice(2)));
+var args = runSuites(processArguments(process.argv.slice(1)));
 
 
 
