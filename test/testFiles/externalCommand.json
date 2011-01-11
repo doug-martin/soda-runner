@@ -15,7 +15,7 @@
     },
     {
         "command" : "and",
-        "file" : "../../test/testHelper",
+        "file" : "test/testHelper",
         "fun" : "assertTitle",
         "args" : ["hello world"]
     },
