@@ -11,7 +11,9 @@ var printUsage = function() {
 }
 
 var createArray = function(testStr) {
-    if (testStr.indexOf(',') > 0) return testStr.replace(/\s+/g, "").split(",").map(function(str){return str.replace('.', '/');});
+    if (testStr.indexOf(',') > 0) return testStr.replace(/\s+/g, "").split(",").map(function(str) {
+        return str.replace('.', '/');
+    });
     else return testStr.replace('.', '/')
 }
 
@@ -35,17 +37,17 @@ var processArguments = function(args) {
             }
         }
     }
+    argObject.testDir = argObject.testDir || __dirname + "/test";
     return argObject;
 };
 
 
 var runSuites = function(args) {
-    if (args.suite)
-    {
-       var runner = new Runner({url : args.url || "http://localhost", browserType : args.browser || 'firefox', testDir : args.testDir || __dirname + "/test"});
+    if (args.suite) {
+        var runner = new Runner(args);
         runner.run(args.suite, args.tests)
     }
-    else printUsage();
+    else printUsage()
 }
 
 var args = runSuites(processArguments(process.argv.slice(1)));
