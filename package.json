@@ -3,9 +3,9 @@
   "description": "Runner for sodaJS",
   "keywords": ["selenium", "soda", "testing", "test", "tests"],
   "version": "0.0.1",
-  "author": "Doug Martin doug.martin@pollenware.com",
+  "author": "Doug Martin doug@dougamartin.com",
   "main": "./index.js",
   "bin"           : { "soda-runner": "./bin/soda-runner" },
-  "dependencies"  : {"soda" : ">=0.2.0", "expresso": ">=0.5.0"},
-  "engines": { "node": ">= 0.2.0" }
+  "dependencies"  : {"soda" : ">=0.2.4", "vows": "*"},
+  "engines": { "node": ">= 0.4.8" }
 }
