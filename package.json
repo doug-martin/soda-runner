@@ -2,10 +2,10 @@
   "name": "soda-runner",
   "description": "Runner for sodaJS",
   "keywords": ["selenium", "soda", "testing", "test", "tests"],
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Doug Martin doug@dougamartin.com",
   "main": "./index.js",
   "bin"           : { "soda-runner": "./bin/soda-runner" },
-  "dependencies"  : {"soda" : ">=0.2.4", "vows": "*"},
+  "dependencies"  : {"soda" : ">=0.2.4", "vows": "*", "comb" : ">=0.0.2"},
   "engines": { "node": ">= 0.4.8" }
 }
